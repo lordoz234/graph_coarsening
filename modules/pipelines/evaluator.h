@@ -8,8 +8,11 @@ namespace Pipeline {
     int eval1();
     int eval1_ = eval1();
     int eval1() {
-        auto f = [&](const std::string& s, const double pipeline_time)
-                    -> std::string {
+        auto f = [&](const std::string& graph_before,
+                     const std::string& graph_after,
+                     const std::string& pipeline_name,
+                     const double pipeline_time)
+                -> std::string {
             const std::string output_file_name =
                 "../graph_data/pipeline_results_" COMPILER_NAME ".txt";
             std::ofstream out;
@@ -19,8 +22,10 @@ namespace Pipeline {
                 out.open(output_file_name, std::ios_base::app);
             ++eval1_;
             CSR<double> graph;
-            graph.read(s);
+            graph.read(graph_after);
             // Evaluation
+            out << graph_before << " ";
+            out << pipeline_name << " ";
             // 1. Coarsening time
             out << pipeline_time << " ";
             // 2. Number of edges
@@ -46,7 +51,7 @@ namespace Pipeline {
                 out << graph_diameter(graph) << " ";
             }
             catch (std::bad_alloc ba) {
-                out << -1 << " ";
+                out << "std::bad_alloc" << " ";
                 std::cerr << ba.what() << std::endl;
             }
             // 7. Graph radius
@@ -54,11 +59,11 @@ namespace Pipeline {
                 out << graph_radius(graph) << " ";
             }
             catch (std::bad_alloc ba) {
-                out << -1 << " ";
+                out << "std::bad_alloc" << " ";
                 std::cerr << ba.what() << std::endl;
             }
             // 8. Average number of vertexes in strongly connected component
-            {
+            try {
                 std::vector <int> components;
                 find_strongly_connected_components(&components, graph);
                 std::map <int, int> m;
@@ -69,22 +74,44 @@ namespace Pipeline {
                     sum += comp.second;
                 out << static_cast<double>(sum) / m.size() << " ";
             }
+            catch (std::bad_alloc ba) {
+                out << "std::bad_alloc" << " ";
+                std::cerr << ba.what() << std::endl;
+            }
             // 9. Number of bridges
-            out << count_bridges(graph) << " ";
+            try {
+                out << count_bridges(graph) << " ";
+            }
+            catch (std::bad_alloc ba) {
+                out << "std::bad_alloc" << " ";
+                std::cerr << ba.what() << std::endl;
+            }
             // 10. Number of joint points
-            out << count_joint_points(graph) << " ";
+            try {
+                out << count_joint_points(graph) << " ";
+            }
+            catch (std::bad_alloc ba) {
+                out << "std::bad_alloc" << " ";
+                std::cerr << ba.what() << std::endl;
+            }
             // 11. Average eccentricity of vertexes
             try {
                 auto ecc = vertexes_eccentricity(graph);
-                int ecc_sum = std::accumulate(begin(ecc), end(ecc), 0);
+                double ecc_sum = std::accumulate(begin(ecc), end(ecc), 0);
                 out << static_cast<double>(ecc_sum) / graph.n << " ";
             }
             catch (std::bad_alloc ba) {
-                out << -1 << " ";
+                out << "std::bad_alloc" << " ";
                 std::cerr << ba.what() << std::endl;
             }
             // 12. Sum of edges weight in minimal spanning tree
-            out << get_cost_of_minimal_spanning_tree(graph) << std::endl;
+            try {
+                out << get_cost_of_minimal_spanning_tree(graph) << std::endl;
+            }
+            catch (std::bad_alloc ba) {
+                out << "std::bad_alloc" << " ";
+                std::cerr << ba.what() << std::endl;
+            }
             // End of evaluation
             out.close();
             return output_file_name;

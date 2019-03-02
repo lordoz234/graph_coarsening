@@ -32,34 +32,28 @@ def lint_walk(subdirectory):
                 print("Checking: " + os.path.join(path, file))
                 if not os.path.exists(os.path.join(data_directory, "lint.log")):
                     open(os.path.join(data_directory, "lint.log"), "w").close()
-                os.system("cpplint " + os.path.join(path, file) + " 2> " + os.path.join(data_directory, "lint.log"))
-                verdict = ""
-                ingored_errors = 0
+                if os.name == "posix":
+                    os.system("cpplint " + os.path.join(path, file) + " 2> " + os.path.join(data_directory, "lint.log") + " 1> /dev/null")
+                elif os.name == "nt":
+                    os.system("cpplint " + os.path.join(path, file) + " 2> " + os.path.join(data_directory, "lint.log") + " 1> NUL")
                 f = open(os.path.join(data_directory, "lint.log"), "r")
+                real_errors = 0
                 for line in f:
-                    if line.endswith("benchmark::State& state  [runtime/references] [2]\n"):
-                        ingored_errors += 1
-                    elif line.endswith("[build/include_what_you_use] [4]\n"):
-                        ingored_errors += 1
-                    verdict = line
+                    if (not line.endswith("benchmark::State& state  [runtime/references] [2]\n") and
+                        not line.endswith("[build/include_what_you_use] [4]\n")):
+                        real_errors += 1
                 f.close()
-                if (verdict.startswith("Done processing")):
+                if real_errors == 0:
                     print("\033[32mSuccess: " + file + "\033[0m")
                 else:
-                    real_errors = int(verdict.split()[-1]) - ingored_errors
-                    if real_errors == 0:
-                        print("\033[32mSuccess: " + file + "\033[0m")
-                    else:
-                        f = open(os.path.join(data_directory, "lint.log"), "r")
-                        for line in f:
-                            if (line.startswith("Done processing")):
-                                break
-                            if (not line.endswith("benchmark::State& state  [runtime/references] [2]\n") and
-                                not line.endswith("[build/include_what_you_use] [4]\n")):
-                                print(line, end='')
-                        f.close()
-                        print("\033[31mFailed: "  + file + "\033[0m")
-                        return_code = 1
+                    f = open(os.path.join(data_directory, "lint.log"), "r")
+                    for line in f:
+                        if (not line.endswith("benchmark::State& state  [runtime/references] [2]\n") and
+                            not line.endswith("[build/include_what_you_use] [4]\n")):
+                            print(line, end='')
+                    f.close()
+                    print("\033[31mFailed: "  + file + "\033[0m")
+                    return_code = 1
     return return_code
 
 def lint():
@@ -133,14 +127,18 @@ def build():
     os.chdir(project_directory)
     return return_code
 
-def run_example(example_name = "main"):
+def run_example(example_name = "main", args = []):
     if not os.path.exists(build_directories[compiler_name]):
         return -1
     os.chdir(build_directories[compiler_name])
     if os.name == "posix":
-        return_code = subprocess.call("./samples/example_" + example_name + "/example_" + example_name, shell=True)
+        command = "./samples/example_" + example_name + "/example_" + example_name
     elif os.name == "nt":
-        return_code = subprocess.call("samples\\example_" + example_name + "\\example_" + example_name + ".exe", shell=True)
+        command = "samples\\example_" + example_name + "\\example_" + example_name + ".exe"
+    for arg in args:
+        command += " " + arg
+    print(command)
+    return_code = subprocess.call(command, shell=True)
     os.chdir(project_directory)
     return return_code
 
@@ -192,15 +190,19 @@ def cmake_graph():
     os.chdir(project_directory)
     return return_code
 
-def run_pipelines():
-    return_code = run_example()
-    if return_code != 0:
+def run_pipelines(args):
+    try:
+        return_code = run_example(args[0], args[1:-1])
+        if return_code != 0:
+            return return_code
+        if os.name == "posix":
+            return_code = subprocess.call("python3 scripts/pipelines_table.py " + data_directory + " " + args[-1], shell=True)
+        elif os.name == "nt":
+            return_code = subprocess.call("python scripts/pipelines_table.py " + data_directory + " " + args[-1], shell=True)
         return return_code
-    if os.name == "posix":
-        return_code = subprocess.call("python3 scripts/pipelines_table.py " + data_directory, shell=True)
-    elif os.name == "nt":
-        return_code = subprocess.call("python scripts/pipelines_table.py " + data_directory, shell=True)
-    return return_code
+    except IndexError:
+        print("Invalid args format. Expected: <compiler> <example_name> <input_files> <output_file>")
+        return -1
 
 def visualize(data_file = None):
     if os.name == "posix":
@@ -210,16 +212,16 @@ def visualize(data_file = None):
     return return_code
 
 def help():
-    print("python3 build.py lint <compiler>             (check code style)")
-    print("python3 build.py build <compiler>            (build project)")
-    print("python3 build.py run <compiler> <example>    (run example, default = example_main)")
-    print("python3 build.py test <compiler>             (run gtests)")
-    print("python3 build.py benchmark <compiler>        (run benchmark)")
-    print("python3 build.py graph <compiler>            (generate graph project)")
-    print("python3 build.py all <compiler>              (check code style, build, run main and tests)")
-    print("python3 build.py asymp <compiler> <args>     (make asymptotics figures)")
-    print("python3 build.py pipelines <compiler>        (run pipelines)")
-    print("python3 build.py visualize <file_path>       (create graph visualization)")
+    print("python3 build.py lint <compiler>                 (check code style)")
+    print("python3 build.py build <compiler>                (build project)")
+    print("python3 build.py run <compiler> <example> <args> (run example)")
+    print("python3 build.py test <compiler>                 (run gtests)")
+    print("python3 build.py benchmark <compiler>            (run benchmark)")
+    print("python3 build.py graph <compiler>                (generate graph project)")
+    print("python3 build.py all <compiler>                  (check code style, build, run main and tests)")
+    print("python3 build.py asymp <compiler> <args>         (make asymptotics figures)")
+    print("python3 build.py pipelines <compiler> <args>     (run pipelines)")
+    print("python3 build.py visualize <file_path>           (create graph visualization)")
     print("compilers: g++ (default), clang (Linux, macOS), msvc (Windows)")
     print("Compler choice temporary works only on linux-like OS")
     print("Use python instead of python3 on Windows")
@@ -233,9 +235,6 @@ if __name__ == "__main__":
         exit(1)
     global compiler_name
     compiler_name = sys.argv[2] if len(sys.argv) > 2 else "g++"
-    additional_args = []
-    for i in range(3, len(sys.argv)):
-        additional_args.append(sys.argv[i])
     if len(sys.argv) < 2:
         help()
     elif (sys.argv[1] == "all"):
@@ -261,7 +260,10 @@ if __name__ == "__main__":
         return_code = build()
     elif (sys.argv[1] == "run"):
         if len(sys.argv) > 3:
-            return_code = run_example(additional_args[0])
+            additional_args = []
+            for i in range(4, len(sys.argv)):
+                additional_args.append(sys.argv[i])
+            return_code = run_example(sys.argv[3], additional_args)
         else:
             return_code = run_example()
     elif (sys.argv[1] == "benchmark"):
@@ -269,8 +271,14 @@ if __name__ == "__main__":
     elif (sys.argv[1] == "test"):
         return_code = run_tests()
     elif (sys.argv[1] == "pipelines"):
-        return_code = run_pipelines()
+        additional_args = []
+        for i in range(3, len(sys.argv)):
+            additional_args.append(sys.argv[i])
+        return_code = run_pipelines(additional_args)
     elif (sys.argv[1] == "asymp"):
+        additional_args = []
+        for i in range(3, len(sys.argv)):
+            additional_args.append(sys.argv[i])
         return_code = asymp(additional_args)
     elif (sys.argv[1] == "graph"):
         return_code = cmake_graph()

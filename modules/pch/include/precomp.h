@@ -33,6 +33,9 @@
 #include "modules/generators/include/washington_test.h"
 #include "modules/generators/include/zadeh_test.h"
 #include "modules/generators/include/cube_test.h"
+#include "modules/generators/include/cycle_generator.h"
+#include "modules/generators/include/stars_generator.h"
+#include "modules/generators/include/chain_generator.h"
 // Graph algorithms
 #include "modules/algorithms/include/random_matching.h"
 #include "modules/algorithms/include/hard_matching.h"
@@ -43,7 +46,8 @@
 #include "modules/algorithms/include/graph_distances.h"
 #include "modules/algorithms/include/minimal_spanning_tree.h"
 #include "modules/algorithms/include/strongly_connected_components.h"
-// Graph export functions
+// Import/export
+#include "modules/common/include/import.h"
 #include "modules/common/include/export.h"
 
 #endif  // MODULES_PCH_INCLUDE_PRECOMP_H_
