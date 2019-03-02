@@ -38,11 +38,9 @@ AL<WeightType> zadeh_test(int n, bool weighted = false) {
                 graph.edges[i].push_back(3*n + j);
                 graph.weights[i].push_back(weight(generator));
             }
-            for (int j = 6*n - 1; j > 5*n; j--) {
-                if (j % 2 != 0) {
-                    graph.edges[i].push_back(j);
-                    graph.weights[i].push_back(weight(generator));
-                }
+            for (int j = 5*n + 1; j < 6*n; j += 2) {
+                graph.edges[i].push_back(j);
+                graph.weights[i].push_back(weight(generator));
             }
         }
         for (int i = 3*n; i < 5*n; i++) {
@@ -50,11 +48,9 @@ AL<WeightType> zadeh_test(int n, bool weighted = false) {
                 graph.edges[i].push_back(n + j);
                 graph.weights[i].push_back(weight(generator));
             }
-            for (int j = 6 * n - 1; j >= 5 * n; j--) {
-                if (j % 2 == 0) {
-                    graph.edges[i].push_back(j);
-                    graph.weights[i].push_back(weight(generator));
-                }
+            for (int j = 5*n; j < 6*n; j += 2) {
+                graph.edges[i].push_back(j);
+                graph.weights[i].push_back(weight(generator));
             }
         }
         for (int i = 0; i < 6*n - 1; i++) {
