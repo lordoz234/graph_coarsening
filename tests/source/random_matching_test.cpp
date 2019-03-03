@@ -30,6 +30,7 @@ TEST(random_matching_fixed_test, basic_zadeh_test_csr) {
     Matching expected;
     expected.edge_b = {0, 1, 2, 4, 8};
     expected.edge_e = {5, 6, 11, 9, 7};
+    std::cout << std::endl;
     ASSERT_EQ(expected.edge_b, matching.edge_b);
     ASSERT_EQ(expected.edge_e, matching.edge_e);
 }
