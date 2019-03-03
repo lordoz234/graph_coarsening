@@ -55,7 +55,7 @@ AL<WeightType> zadeh_test(int n, bool weighted = false) {
         }
         for (int i = 0; i < 6*n - 1; i++) {
             bool f = false;
-            for (int j = 0; j < graph.edges[i].size(); j++) {
+            for (unsigned j = 0; j < graph.edges[i].size(); j++) {
                 int to = graph.edges[i][j];
                 if ((to - i) == 1) f = true;
             }
