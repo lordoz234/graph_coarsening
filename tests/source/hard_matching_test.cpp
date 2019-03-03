@@ -1,6 +1,5 @@
 // Copyright [year] <Copyright Owner>
 #include <gtest/gtest.h>
-#include <iostream>
 #include "../../modules/pch/include/precomp.h"
 
 
