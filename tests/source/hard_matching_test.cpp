@@ -38,7 +38,7 @@ TEST(hard_matching_test, basic_washington_test_al_2_int) {
         expect.edge_e.push_back(to);
         int maxlen = 0, b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             int len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -88,7 +88,7 @@ TEST(hard_matching_test, basic_washington_test_al_2_double) {
         double maxlen = 0;
         int b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             double len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -185,7 +185,7 @@ TEST(hard_matching_test, basic_washington_test_al_4_int) {
         expect.edge_e.push_back(to);
         int maxlen = 0, b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             int len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -235,7 +235,7 @@ TEST(hard_matching_test, basic_washington_test_al_4_double) {
         double maxlen = 0;
         int b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             double len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -286,7 +286,7 @@ TEST(hard_matching_test, basic_zadeh_test_al_2_int) {
         double maxlen = 0;
         int b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             double len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -338,7 +338,7 @@ TEST(hard_matching_test, basic_zadeh_test_al_2_double) {
         double maxlen = 0;
         int b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             double len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -389,7 +389,7 @@ TEST(hard_matching_test, basic_zadeh_test_al_4_int) {
         expect.edge_e.push_back(to);
         int maxlen = 0, b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             int len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -441,7 +441,7 @@ TEST(hard_matching_test, basic_zadeh_test_al_4_double) {
         double maxlen = 0;
         int b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             double len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -519,7 +519,7 @@ TEST(hard_matching_test, basic_stars_generator_al_2_int) {
         int maxlen = 0;
         int b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             int len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -545,7 +545,7 @@ TEST(hard_matching_test, basic_stars_generator_al_2_double) {
         double maxlen = 0;
         int b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             double len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -623,7 +623,7 @@ TEST(hard_matching_test, basic_cycle_generator_al_2_int) {
         int maxlen = 0;
         int b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             int len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -649,7 +649,7 @@ TEST(hard_matching_test, basic_cycle_generator_al_2_double) {
         double maxlen = 0;
         int b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             double len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -727,7 +727,7 @@ TEST(hard_matching_test, basic_chain_generator_al_2_int) {
         int maxlen = 0;
         int b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             int len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
@@ -753,7 +753,7 @@ TEST(hard_matching_test, basic_chain_generatorr_al_2_double) {
         double maxlen = 0;
         int b = -1;
         used[to] = true;
-        for (int j = 0; j < graph.edges[to].size(); j++) {
+        for (unsigned j = 0; j < graph.edges[to].size(); j++) {
             int to1 = graph.edges[to][j];
             double len = graph.weights[to][j];
             if (len > maxlen && !used[to1]) {
