@@ -10,7 +10,7 @@ TEST(hard_matching_test, basic_washington_test_csr_2_int) {
     Matching expect;
     std::vector <char> used;
     used.resize(graph.n);
-    for (int i = 0; i < matching.edge_e.size(); i++) {
+    for (unsigned i = 0; i < matching.edge_e.size(); i++) {
         int to = matching.edge_e[i];
         expect.edge_e.push_back(to);
         int maxlen = 0, b = -1;
@@ -34,7 +34,7 @@ TEST(hard_matching_test, basic_washington_test_csr_2_double) {
     Matching expect;
     std::vector <char> used;
     used.resize(graph.n);
-    for (int i = 0; i < matching.edge_e.size(); i++) {
+    for (unsigned i = 0; i < matching.edge_e.size(); i++) {
         int to = matching.edge_e[i];
         expect.edge_e.push_back(to);
         double maxlen = 0;
@@ -57,7 +57,7 @@ TEST(hard_matching_test, basic_washington_test_csr_1_int) {
     CSR<int> graph = washington_test<int>(1, true);
     Matching matching = hard_matching(graph);
     Matching expect;
-    for (int i = 0; i < matching.edge_b.size(); i++) {
+    for (unsigned i = 0; i < matching.edge_b.size(); i++) {
         expect.edge_e.push_back(matching.edge_e[i]);
         expect.edge_b.push_back(matching.edge_e[i] + 1);
     }
@@ -70,7 +70,7 @@ TEST(hard_matching_test, basic_washington_test_csr_1_double) {
     CSR<double> graph = washington_test<double>(1, true);
     Matching matching = hard_matching(graph);
     Matching expect;
-    for (int i = 0; i < matching.edge_b.size(); i++) {
+    for (unsigned i = 0; i < matching.edge_b.size(); i++) {
         expect.edge_e.push_back(matching.edge_e[i]);
         expect.edge_b.push_back(matching.edge_e[i] + 1);
     }
@@ -84,7 +84,7 @@ TEST(hard_matching_test, basic_washington_test_csr_4_int) {
     Matching expect;
     std::vector <char> used;
     used.resize(graph.n);
-    for (int i = 0; i < matching.edge_e.size(); i++) {
+    for (unsigned i = 0; i < matching.edge_e.size(); i++) {
         int to = matching.edge_e[i];
         expect.edge_e.push_back(to);
         int maxlen = 0, b = -1;
@@ -108,7 +108,7 @@ TEST(hard_matching_test, basic_washington_test_csr_4_double) {
     Matching expect;
     std::vector <char> used;
     used.resize(graph.n);
-    for (int i = 0; i < matching.edge_e.size(); i++) {
+    for (unsigned i = 0; i < matching.edge_e.size(); i++) {
         int to = matching.edge_e[i];
         expect.edge_e.push_back(to);
         double maxlen = 0;
@@ -133,7 +133,7 @@ TEST(hard_matching_test, basic_zadeh_test_csr_2_int) {
     Matching expect;
     std::vector <char> used;
     used.resize(graph.n);
-    for (int i = 0; i < matching.edge_e.size(); i++) {
+    for (unsigned i = 0; i < matching.edge_e.size(); i++) {
         int to = matching.edge_e[i];
         expect.edge_e.push_back(to);
         double maxlen = 0;
@@ -159,7 +159,7 @@ TEST(hard_matching_test, basic_zadeh_test_csr_2_double) {
     Matching expect;
     std::vector <char> used;
     used.resize(graph.n);
-    for (int i = 0; i < matching.edge_e.size(); i++) {
+    for (unsigned i = 0; i < matching.edge_e.size(); i++) {
         int to = matching.edge_e[i];
         expect.edge_e.push_back(to);
         double maxlen = 0;
@@ -185,7 +185,7 @@ TEST(hard_matching_test, basic_zadeh_test_csr_4_int) {
     Matching expect;
     std::vector <char> used;
     used.resize(graph.n);
-    for (int i = 0; i < matching.edge_e.size(); i++) {
+    for (unsigned i = 0; i < matching.edge_e.size(); i++) {
         int to = matching.edge_e[i];
         expect.edge_e.push_back(to);
         int maxlen = 0, b = -1;
@@ -210,7 +210,7 @@ TEST(hard_matching_test, basic_zadeh_test_csr_4_double) {
     Matching expect;
     std::vector <char> used;
     used.resize(graph.n);
-    for (int i = 0; i < matching.edge_e.size(); i++) {
+    for (unsigned i = 0; i < matching.edge_e.size(); i++) {
         int to = matching.edge_e[i];
         expect.edge_e.push_back(to);
         double maxlen = 0;
