@@ -80,6 +80,8 @@ Matching PGA(const CSR<WeightType> &graph, MatchingFunction match) {
         }
         Matching result_new = match(P);
         for (int i = 0; i < result_new.n; i++) {
+            used1[result_new.edge_b[i]] = true;
+            used1[result_new.edge_e[i]] = true;
             result.edge_b.push_back(result_new.edge_b[i]);
             result.edge_e.push_back(result_new.edge_e[i]);
         }
