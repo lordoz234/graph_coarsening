@@ -48,6 +48,7 @@
 #include "modules/algorithms/include/minimal_spanning_tree.h"
 #include "modules/algorithms/include/strongly_connected_components.h"
 #include "modules/algorithms/include/edmonds.h"
+#include "modules/algorithms/include/pga.h"
 
 // Import/export
 #include "modules/common/include/import.h"
