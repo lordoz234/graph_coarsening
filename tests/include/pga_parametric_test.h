@@ -162,7 +162,7 @@ class pga_zadeh_test : public testing::TestWithParam<int> {
         CSR<int> csr = zadeh_test<int>(value);
         Matching matching = PGA(csr, [](const CSR<int>& graph) -> Matching {
             return random_matching<int>(graph);
-         });    
+        });
         std::vector <int> ed(csr.n, 0);
         int k = 1;
         for (int i = 0; i < matching.n; i++) {
@@ -192,7 +192,7 @@ class pga_zadeh_test : public testing::TestWithParam<int> {
         CSR<int> csr = zadeh_test<int>(value);
         Matching matching = PGA(csr, [](const CSR<int>& graph) -> Matching {
             return hard_matching<int>(graph);
-         });    
+        });
         std::vector <int> ed(csr.n, 0);
         int k = 1;
         for (int i = 0; i < matching.n; i++) {
@@ -222,7 +222,7 @@ class pga_zadeh_test : public testing::TestWithParam<int> {
         CSR<int> csr = zadeh_test<int>(value);
         Matching matching = PGA(csr, [](const CSR<int>& graph) -> Matching {
             return edmonds<int>(graph);
-         });    
+        });
         std::vector <int> ed(csr.n, 0);
         int k = 1;
         for (int i = 0; i < matching.n; i++) {
@@ -397,7 +397,7 @@ class pga_cube_test : public testing::TestWithParam<int> {
         CSR<int> csr = cube_test<int>(value);
         Matching matching = PGA(csr, [](const CSR<int>& graph) -> Matching {
             return random_matching<int>(graph);
-         });    
+        });
         std::map <int, int> m;
         for (int i = 0; i < matching.n; i++) {
             m[matching.edge_e[i]]++;
@@ -412,7 +412,7 @@ class pga_cube_test : public testing::TestWithParam<int> {
         CSR<int> csr = cube_test<int>(value);
         Matching matching = PGA(csr, [](const CSR<int>& graph) -> Matching {
             return hard_matching<int>(graph);
-         });    
+        });
         std::map <int, int> m;
         for (int i = 0; i < matching.n; i++) {
             m[matching.edge_e[i]]++;
@@ -427,7 +427,7 @@ class pga_cube_test : public testing::TestWithParam<int> {
         CSR<int> csr = cube_test<int>(value);
         Matching matching = PGA(csr, [](const CSR<int>& graph) -> Matching {
             return edmonds<int>(graph);
-         });    
+        });
         std::map <int, int> m;
         for (int i = 0; i < matching.n; i++) {
             m[matching.edge_e[i]]++;

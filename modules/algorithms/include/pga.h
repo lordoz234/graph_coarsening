@@ -21,13 +21,16 @@ Matching PGA(const CSR<WeightType> &graph, MatchingFunction match) {
     auto deg = [&](int k) {
         int deg_ans = 0;
         for (int i = graph.offset[k]; i < graph.offset[k + 1]; i++) {
-            if (used.find(std::make_pair(k, graph.edges[i])) 
+            if (used.find(std::make_pair(k, graph.edges[i]))
                 == used.end()) {
                 deg_ans++;
             }
         }
-        if (deg_ans > 0) return true; 
-        else return false;
+        if (deg_ans > 0) {
+            return true;
+        } else {
+            return false;
+        }
     };
     auto is_edge = [&]() {
         int edge_ans = 0;
@@ -47,7 +50,7 @@ Matching PGA(const CSR<WeightType> &graph, MatchingFunction match) {
         P.edges.resize(size);
         P.weights.resize(size);
         int v = -1;
-        for (int i = 0; i < ed.size(); i++) {
+        for (unsigned i = 0; i < ed.size(); i++) {
             if (deg(ed[i]) && !used1[ed[i]]) {
                 v = ed[i];
                 break;
