@@ -30,6 +30,7 @@
 #include "modules/data_structures/include/csr.h"
 #include "modules/data_structures/include/jds.h"
 #include "modules/data_structures/include/matching.h"
+#include "modules/data_structures/include/struct_for_weight_matching.h"
 // Graph generators
 #include "modules/generators/include/washington_test.h"
 #include "modules/generators/include/zadeh_test.h"
@@ -49,6 +50,7 @@
 #include "modules/algorithms/include/strongly_connected_components.h"
 #include "modules/algorithms/include/edmonds.h"
 #include "modules/algorithms/include/pga.h"
+#include "modules/algorithms/include/max_weight_matching.h"
 
 // Import/export
 #include "modules/common/include/import.h"
