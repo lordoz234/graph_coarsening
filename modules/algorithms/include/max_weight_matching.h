@@ -21,7 +21,7 @@ Matching max_weight_matching(const SM<WeightType>& graph) {
         if (graph.weights[i - 1] + W[i - 2] > W[i - 1]) {
             W[i] = graph.weights[i - 1] + W[i - 2];
             Matching temp;
-            for (int j = 0; j < M[i - 2].edge_b.size(); j++) {
+            for (unsigned j = 0; j < M[i - 2].edge_b.size(); j++) {
                 temp.edge_b.push_back(M[i - 2].edge_b[j]);
                 temp.edge_e.push_back(M[i - 2].edge_e[j]);
             }
@@ -31,7 +31,7 @@ Matching max_weight_matching(const SM<WeightType>& graph) {
         } else {
             W[i] = W[i - 1];
             Matching temp;
-            for (int j = 0; j < M[i - 1].edge_b.size(); j++) {
+            for (unsigned j = 0; j < M[i - 1].edge_b.size(); j++) {
                 temp.edge_b.push_back(M[i - 1].edge_b[j]);
                 temp.edge_e.push_back(M[i - 1].edge_e[j]);
             }
