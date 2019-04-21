@@ -12,193 +12,106 @@ class GC_washington_test: public testing::TestWithParam<int> {
 
     void correct_GC_hard_matching() {
         CSR<int> graph1 = washington_test<int>(value);
-        int size = 0;
-        for (int i = 0; i < graph1.n; i++) {
-            for (int j = graph1.offset[i]; j < graph1.offset[i + 1]; j++) {
-                ++size;
-            }
-        }
+        int size = graph1.edges.size();
         Matching gr = hard_matching(graph1);
         CSR<int> graph = graph_coarsening1(graph1, gr);
-        int size1 = 0;
-        for (int i = 0; i < graph.n; i++) {
-            for (int j = graph.offset[i]; j < graph.offset[i + 1]; j++) {
-                ++size1;
-            }
-        }
+        int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
-    
+
     void correct_GC_random_matching() {
         CSR<int> graph1 = washington_test<int>(value);
-        int size = 0;
-        for (int i = 0; i < graph1.n; i++) {
-            for (int j = graph1.offset[i]; j < graph1.offset[i + 1]; j++) {
-                ++size;
-            }
-        }
+        int size = graph1.edges.size();
         Matching gr = random_matching(graph1);
         CSR<int> graph = graph_coarsening1(graph1, gr);
-        int size1 = 0;
-        for (int i = 0; i < graph.n; i++) {
-            for (int j = graph.offset[i]; j < graph.offset[i + 1]; j++) {
-                ++size1;
-            }
-        }
+        int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
-    
+
     void correct_GC_edmonds() {
         CSR<int> graph1 = washington_test<int>(value);
-        int size = 0;
-        for (int i = 0; i < graph1.n; i++) {
-            for (int j = graph1.offset[i]; j < graph1.offset[i + 1]; j++) {
-                ++size;
-            }
-        }
+        int size = graph1.edges.size();
         Matching gr = edmonds(graph1);
         CSR<int> graph = graph_coarsening1(graph1, gr);
-        int size1 = 0;
-        for (int i = 0; i < graph.n; i++) {
-            for (int j = graph.offset[i]; j < graph.offset[i + 1]; j++) {
-                ++size1;
-            }
-        }
+        int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
+
  private:
     int value;
 };
 
 class GC_zadeh_test: public testing::TestWithParam<int> {
-public:
+ public:
     GC_zadeh_test() {
         value = GetParam();
     }
-    
+
     void correct_GC_hard_matching() {
         CSR<int> graph1 = zadeh_test<int>(value);
-        int size = 0;
-        for (int i = 0; i < graph1.n; i++) {
-            for (int j = graph1.offset[i]; j < graph1.offset[i + 1]; j++) {
-                ++size;
-            }
-        }
+        int size = graph1.edges.size();
         Matching gr = hard_matching(graph1);
         CSR<int> graph = graph_coarsening1(graph1, gr);
-        int size1 = 0;
-        for (int i = 0; i < graph.n; i++) {
-            for (int j = graph.offset[i]; j < graph.offset[i + 1]; j++) {
-                ++size1;
-            }
-        }
+        int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
-    
+
     void correct_GC_random_matching() {
         CSR<int> graph1 = zadeh_test<int>(value);
-        int size = 0;
-        for (int i = 0; i < graph1.n; i++) {
-            for (int j = graph1.offset[i]; j < graph1.offset[i + 1]; j++) {
-                ++size;
-            }
-        }
+        int size = graph1.edges.size();
         Matching gr = random_matching(graph1);
         CSR<int> graph = graph_coarsening1(graph1, gr);
-        int size1 = 0;
-        for (int i = 0; i < graph.n; i++) {
-            for (int j = graph.offset[i]; j < graph.offset[i + 1]; j++) {
-                ++size1;
-            }
-        }
+        int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
-    
+
     void correct_GC_edmonds() {
         CSR<int> graph1 = zadeh_test<int>(value);
-        int size = 0;
-        for (int i = 0; i < graph1.n; i++) {
-            for (int j = graph1.offset[i]; j < graph1.offset[i + 1]; j++) {
-                ++size;
-            }
-        }
+        int size = graph1.edges.size();
         Matching gr = edmonds(graph1);
         CSR<int> graph = graph_coarsening1(graph1, gr);
-        int size1 = 0;
-        for (int i = 0; i < graph.n; i++) {
-            for (int j = graph.offset[i]; j < graph.offset[i + 1]; j++) {
-                ++size1;
-            }
-        }
+        int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
-private:
+
+ private:
     int value;
 };
 
 class GC_cube_test: public testing::TestWithParam<int> {
-public:
+ public:
     GC_cube_test() {
         value = GetParam();
     }
-    
+
     void correct_GC_hard_matching() {
         CSR<int> graph1 = cube_test<int>(value);
-        int size = 0;
-        for (int i = 0; i < graph1.n; i++) {
-            for (int j = graph1.offset[i]; j < graph1.offset[i + 1]; j++) {
-                ++size;
-            }
-        }
+        int size = graph1.edges.size();
         Matching gr = hard_matching(graph1);
         CSR<int> graph = graph_coarsening1(graph1, gr);
-        int size1 = 0;
-        for (int i = 0; i < graph.n; i++) {
-            for (int j = graph.offset[i]; j < graph.offset[i + 1]; j++) {
-                ++size1;
-            }
-        }
+        int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
-    
+
     void correct_GC_random_matching() {
         CSR<int> graph1 = cube_test<int>(value);
-        int size = 0;
-        for (int i = 0; i < graph1.n; i++) {
-            for (int j = graph1.offset[i]; j < graph1.offset[i + 1]; j++) {
-                ++size;
-            }
-        }
+        int size = graph1.edges.size();
         Matching gr = random_matching(graph1);
         CSR<int> graph = graph_coarsening1(graph1, gr);
-        int size1 = 0;
-        for (int i = 0; i < graph.n; i++) {
-            for (int j = graph.offset[i]; j < graph.offset[i + 1]; j++) {
-                ++size1;
-            }
-        }
+        int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
-    
+
     void correct_GC_edmonds() {
         CSR<int> graph1 = cube_test<int>(value);
-        int size = 0;
-        for (int i = 0; i < graph1.n; i++) {
-            for (int j = graph1.offset[i]; j < graph1.offset[i + 1]; j++) {
-                ++size;
-            }
-        }
+        int size = graph1.edges.size();
         Matching gr = edmonds(graph1);
         CSR<int> graph = graph_coarsening1(graph1, gr);
-        int size1 = 0;
-        for (int i = 0; i < graph.n; i++) {
-            for (int j = graph.offset[i]; j < graph.offset[i + 1]; j++) {
-                ++size1;
-            }
-        }
+        int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
-private:
+
+ private:
     int value;
 };
 
@@ -270,4 +183,4 @@ INSTANTIATE_TEST_SUITE_P(GC_test2, GC_zadeh_test,
 INSTANTIATE_TEST_SUITE_P(GC_test3, GC_cube_test,
                          testing::ValuesIn(gs_cube_samples));
 
-#endif // TESTS_INCLUDE_GRAPH_COARSERING_PARAMETRIC_TEST_H_
+#endif  // TESTS_INCLUDE_GRAPH_COARSERING_PARAMETRIC_TEST_H_

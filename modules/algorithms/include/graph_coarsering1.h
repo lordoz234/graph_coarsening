@@ -51,7 +51,8 @@ CSR<WeightType> graph_coarsening1(const CSR<WeightType>& graph,
     }
     for (int i = 0; i < match.n; i++) {
         union_set(match.edge_e[i], match.edge_b[i]);
-        m1[finds_set(match.edge_e[i])] = m[std::make_pair(match.edge_e[i], match.edge_b[i])];
+        m1[finds_set(match.edge_e[i])] =
+        m[std::make_pair(match.edge_e[i], match.edge_b[i])];
     }
     int new_size = graph.n;
     new_graph.edges.resize(new_size);
