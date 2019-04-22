@@ -14,7 +14,7 @@ class GC_washington_test: public testing::TestWithParam<int> {
         CSR<int> graph1 = washington_test<int>(value);
         int size = graph1.edges.size();
         Matching gr = hard_matching(graph1);
-        CSR<int> graph = graph_coarsening1(graph1, gr);
+        CSR<int> graph = graph_coarsening(graph1, gr);
         int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
@@ -23,7 +23,7 @@ class GC_washington_test: public testing::TestWithParam<int> {
         CSR<int> graph1 = washington_test<int>(value);
         int size = graph1.edges.size();
         Matching gr = random_matching(graph1);
-        CSR<int> graph = graph_coarsening1(graph1, gr);
+        CSR<int> graph = graph_coarsening(graph1, gr);
         int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
@@ -32,7 +32,7 @@ class GC_washington_test: public testing::TestWithParam<int> {
         CSR<int> graph1 = washington_test<int>(value);
         int size = graph1.edges.size();
         Matching gr = edmonds(graph1);
-        CSR<int> graph = graph_coarsening1(graph1, gr);
+        CSR<int> graph = graph_coarsening(graph1, gr);
         int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
@@ -51,7 +51,7 @@ class GC_zadeh_test: public testing::TestWithParam<int> {
         CSR<int> graph1 = zadeh_test<int>(value);
         int size = graph1.edges.size();
         Matching gr = hard_matching(graph1);
-        CSR<int> graph = graph_coarsening1(graph1, gr);
+        CSR<int> graph = graph_coarsening(graph1, gr);
         int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
@@ -60,7 +60,7 @@ class GC_zadeh_test: public testing::TestWithParam<int> {
         CSR<int> graph1 = zadeh_test<int>(value);
         int size = graph1.edges.size();
         Matching gr = random_matching(graph1);
-        CSR<int> graph = graph_coarsening1(graph1, gr);
+        CSR<int> graph = graph_coarsening(graph1, gr);
         int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
@@ -69,7 +69,7 @@ class GC_zadeh_test: public testing::TestWithParam<int> {
         CSR<int> graph1 = zadeh_test<int>(value);
         int size = graph1.edges.size();
         Matching gr = edmonds(graph1);
-        CSR<int> graph = graph_coarsening1(graph1, gr);
+        CSR<int> graph = graph_coarsening(graph1, gr);
         int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
@@ -88,7 +88,7 @@ class GC_cube_test: public testing::TestWithParam<int> {
         CSR<int> graph1 = cube_test<int>(value);
         int size = graph1.edges.size();
         Matching gr = hard_matching(graph1);
-        CSR<int> graph = graph_coarsening1(graph1, gr);
+        CSR<int> graph = graph_coarsening(graph1, gr);
         int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
@@ -97,7 +97,7 @@ class GC_cube_test: public testing::TestWithParam<int> {
         CSR<int> graph1 = cube_test<int>(value);
         int size = graph1.edges.size();
         Matching gr = random_matching(graph1);
-        CSR<int> graph = graph_coarsening1(graph1, gr);
+        CSR<int> graph = graph_coarsening(graph1, gr);
         int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }
@@ -106,7 +106,7 @@ class GC_cube_test: public testing::TestWithParam<int> {
         CSR<int> graph1 = cube_test<int>(value);
         int size = graph1.edges.size();
         Matching gr = edmonds(graph1);
-        CSR<int> graph = graph_coarsening1(graph1, gr);
+        CSR<int> graph = graph_coarsening(graph1, gr);
         int size1 = graph.edges.size();
         EXPECT_EQ(true, size > size1);
     }

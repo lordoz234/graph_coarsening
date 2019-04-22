@@ -51,7 +51,6 @@
 #include "modules/algorithms/include/pga.h"
 #include "modules/algorithms/include/max_weight_matching.h"
 #include "modules/algorithms/include/gpa.h"
-#include "modules/algorithms/include/graph_coarsering1.h"
 #include "modules/algorithms/include/LAM.h"
 // Import/export
 #include "modules/common/include/import.h"
