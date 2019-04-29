@@ -2,6 +2,7 @@
 #include "../../modules/pch/include/precomp.h"
 #include "gtest/gtest.h"
 
+#if 0
 TEST(convert_to_undirected_graph_test, simple_graph_with_random_matching) {
     AL <int> graph1;
     graph1.n = 4;
@@ -190,3 +191,5 @@ TEST(convert_to_undirected_graph_test, doesnt_modify_graph_without_edges) {
         ASSERT_EQ(0u, graph.weights[i].size());
     }
 }
+
+#endif

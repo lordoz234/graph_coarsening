@@ -146,25 +146,10 @@ CSR<WeightType> graph_coarsening(const CSR<WeightType>& graph,
 }
 #endif
 
-template <typename WeightType>
+template <typename WeightType, typename MatchingFunction>
 CSR<WeightType> graph_coarsening(const CSR<WeightType>& graph,
-                                  const Matching& match) {
+                                  MatchingFunction get_matching) {
     AL <WeightType> new_graph;
-    std::map <std::pair<int, int>, WeightType> m;
-    std::set <std::pair<int, int>> is_match;
-    for (int i = 0; i < match.n; i++) {
-        is_match.insert(std::make_pair(match.edge_e[i], match.edge_b[i]));
-        is_match.insert(std::make_pair(match.edge_b[i], match.edge_e[i]));
-    }
-    for (int i = 0; i < graph.n; i++) {
-        for (int j = graph.offset[i]; j < graph.offset[i + 1]; j++) {
-            int to = graph.edges[j];
-            WeightType weight = graph.weights[j];
-            if (is_match.find(std::make_pair(i, to)) != is_match.end()) {
-                m[std::make_pair(i, to)] = weight;
-            }
-        }
-    }
     std::vector <int> parent(graph.n);
     std::vector <int> rank(graph.n);
     auto make_set = [&] (int v) {
@@ -188,34 +173,131 @@ CSR<WeightType> graph_coarsening(const CSR<WeightType>& graph,
             }
         }
     };
+    AL<WeightType> new_graphs = graph;
+    for (int i = 0; i < graph.n; i++) {
+        make_set(i);
+    }
+    std::vector <char> used(graph.n, false);
+    std::vector <int> hash(graph.n);
+    std::map <int, WeightType> new_weights;
+    for (int i = 0; i < new_graphs.n; i++) {
+        int hash_i = 0;
+        for (int j = 0; j < new_graphs.edges[i].size(); j++) {
+            int to = new_graphs.edges[i][j];
+            hash_i += to;
+        }
+        hash[i] = hash_i;
+    }
+    for (int i = 0; i < graph.n; i++) {
+        for (int j = 0; j < new_graphs.n; j++) {
+            if (i == j) {
+                continue;
+            } else {
+                if (hash[i] == hash[j]) {
+                    std::set <int> r;
+                    WeightType weight = 0;
+                    for (int i1 = 0; i1 < new_graphs.edges[i].size();
+                         i1++) {
+                        int to = new_graphs.edges[i][i1];
+                        weight = std::max(weight, new_graphs.weights[i][i1]);
+                        r.insert(to);
+                    }
+                    int size = r.size();
+                    for (int i1 = 0; i1 < new_graphs.edges[j].size();
+                         i1++) {
+                        int to = new_graphs.edges[j][i1];
+                        weight = std::max(weight, new_graphs.weights[i][i1]);
+                        r.insert(to);
+                    }
+                    if (size == r.size()) {
+                        union_set(i, j);
+                        new_weights[finds_set(i)] += weight;
+                    }
+                }
+            }
+        }
+    }
+    std::set <std::pair<int, int>> used1;
+    AL<WeightType> new_graph_1;
+    new_graph_1.n = graph.n;
+    new_graph_1.edges.resize(graph.n);
+    new_graph_1.weights.resize(graph.n);
+    for (int i = 0; i < new_graphs.n; i++) {
+        for (int j = 0; j < new_graphs.edges[i].size(); j++) {
+            int to = new_graphs.edges[i][j];
+            WeightType w = new_graphs.weights[i][j];
+            int a = finds_set(i);
+            int b = finds_set(to);
+            if (a != b) {
+                if (used1.find(std::make_pair(a, b)) == used1.end()) {
+                    used1.insert(std::make_pair(a, b));
+                    new_graph_1.edges[a].push_back(b);
+                    new_graph_1.weights[a].push_back(w + new_weights[a]
+                                                     + new_weights[b]);
+                }
+            }
+        }
+    }
+    for (int i = 0; i < graph.n; i++) {
+        parent[i] = 0;
+    }
+    for (int i = 0; i < graph.n; i++) {
+        rank[i] = 0;
+    }
     std::map <int, WeightType> m1;
     for (int i = 0; i < graph.n; i++) {
         make_set(i);
     }
+    Matching match = get_matching(new_graph_1);
+    for (int i = 0; i < match.edge_b.size(); i++) {
+        std::cout << match.edge_b[i] << " " << match.edge_e[i] << std::endl;
+    }
     for (int i = 0; i < match.n; i++) {
         union_set(match.edge_e[i], match.edge_b[i]);
-        m1[finds_set(match.edge_e[i])] =
-        m[std::make_pair(match.edge_e[i], match.edge_b[i])];
     }
     int new_size = graph.n;
     new_graph.edges.resize(new_size);
     new_graph.weights.resize(new_size);
     new_graph.n = new_size;
-    for (int i = 0; i < graph.n; i++) {
-        for (int j = graph.offset[i]; j < graph.offset[i + 1]; j++) {
-            int to = graph.edges[j];
-            WeightType weight = graph.weights[j];
+    std::set <int> a1;
+    int new_size1 = 0;
+    for (int i = 0; i < new_graph_1.n; i++) {
+        for (int j = 0; j < new_graph_1.edges[i].size(); j++) {
+            int to = new_graph_1.edges[i][j];
+            WeightType weight = new_graph_1.weights[i][j];
             int a = finds_set(i);
             int b = finds_set(to);
             if (a == b) {
                 continue;
             } else {
+                a1.insert(a);
+                a1.insert(b);
                 new_graph.edges[a].push_back(b);
                 new_graph.weights[a].push_back(weight);
             }
         }
     }
-    return new_graph;
+    std::map <int, int> ng;
+    int k = 0;
+    for (auto it : a1) {
+        ng[it] = k;
+        ++k;
+    }
+    new_size1 = graph.n + 1;
+    AL<WeightType> nr;
+    nr.n = new_size1;
+    nr.edges.resize(new_size1);
+    nr.weights.resize(new_size1);
+    for (int i = 0; i < new_graph.n; i++) {
+        std::cout << new_graph.edges[i].size() << std::endl;
+        for (int j = 0; j < new_graph.edges[i].size(); j++) {
+            std::cout << "LOH" << std::endl;
+            int to = new_graph.edges[i][j];
+            nr.edges[ng[i]].push_back(ng[to]);
+        }
+    }
+    std::cout << 2;
+    return nr;
 }
 
 #endif  // MODULES_ALGORITHMS_INCLUDE_GRAPH_COARSENING_H_
