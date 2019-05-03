@@ -249,9 +249,6 @@ CSR<WeightType> graph_coarsening(const CSR<WeightType>& graph,
         make_set(i);
     }
     Matching match = get_matching(new_graph_1);
-    for (int i = 0; i < match.edge_b.size(); i++) {
-        std::cout << match.edge_b[i] << " " << match.edge_e[i] << std::endl;
-    }
     for (int i = 0; i < match.n; i++) {
         union_set(match.edge_e[i], match.edge_b[i]);
     }
@@ -283,20 +280,19 @@ CSR<WeightType> graph_coarsening(const CSR<WeightType>& graph,
         ng[it] = k;
         ++k;
     }
-    new_size1 = graph.n + 1;
+    new_size1 = k;
     AL<WeightType> nr;
     nr.n = new_size1;
     nr.edges.resize(new_size1);
     nr.weights.resize(new_size1);
     for (int i = 0; i < new_graph.n; i++) {
-        std::cout << new_graph.edges[i].size() << std::endl;
         for (int j = 0; j < new_graph.edges[i].size(); j++) {
-            std::cout << "LOH" << std::endl;
             int to = new_graph.edges[i][j];
+            WeightType weight = new_graph.weights[i][j];
             nr.edges[ng[i]].push_back(ng[to]);
+            nr.weights[ng[i]].push_back(weight);
         }
     }
-    std::cout << 2;
     return nr;
 }
 
