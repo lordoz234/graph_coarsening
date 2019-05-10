@@ -197,7 +197,8 @@ void PipelineParser::Pipeline::launch() {
                 } else if (type == "gpa") {
                     if (subtype == "random") {
                         for (int i = 0; i < count; ++i) {
-                            graph = graph_coarsening(graph, [](const CSR<double>& graph)
+                            graph = graph_coarsening(graph,
+                                [](const CSR<double>& graph)
                                 -> Matching { return GPA(graph,
                                 [](const CSR<double>& graph) -> Matching {
                                 return random_matching(graph);
@@ -208,7 +209,8 @@ void PipelineParser::Pipeline::launch() {
                         }
                     } else if (subtype == "hard") {
                         for (int i = 0; i < count; ++i) {
-                            graph = graph_coarsening(graph,  [](const CSR<double>& graph)
+                            graph = graph_coarsening(graph,
+                                [](const CSR<double>& graph)
                                 -> Matching { return GPA(graph,
                                 [](const CSR<double>& graph) -> Matching {
                                     return hard_matching(graph);
@@ -221,7 +223,8 @@ void PipelineParser::Pipeline::launch() {
                         for (int i = 0; i < count; ++i) {
                             graph = graph_coarsening(graph,
                                 [](const CSR<double>& graph) -> Matching {
-                                return  GPA(graph, [](const CSR<double>& graph) -> Matching {
+                                return  GPA(graph,
+                                    [](const CSR<double>& graph) -> Matching {
                                     return edmonds(graph);
                                 });});
                             std::cout << "iteration: " << i << " n: "

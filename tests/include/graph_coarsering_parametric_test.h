@@ -13,7 +13,8 @@ class GC_washington_test: public testing::TestWithParam<int> {
     void correct_GC_hard_matching() {
         CSR<int> graph1 = washington_test<int>(value);
         int size = graph1.edges.size();
-        CSR<int> graph = graph_coarsening(graph1, [](const CSR<int>& graph) -> Matching {
+        CSR<int> graph = graph_coarsening(graph1,
+            [](const CSR<int>& graph) -> Matching {
             return hard_matching<int>(graph);
         });
         int size1 = graph.edges.size();
@@ -23,7 +24,8 @@ class GC_washington_test: public testing::TestWithParam<int> {
     void correct_GC_random_matching() {
         CSR<int> graph1 = washington_test<int>(value);
         int size = graph1.edges.size();
-        CSR<int> graph = graph_coarsening(graph1, [](const CSR<int>& graph) -> Matching {
+        CSR<int> graph = graph_coarsening(graph1,
+            [](const CSR<int>& graph) -> Matching {
             return random_matching<int>(graph);
         });
         int size1 = graph.edges.size();
@@ -33,7 +35,8 @@ class GC_washington_test: public testing::TestWithParam<int> {
     void correct_GC_edmonds() {
         CSR<int> graph1 = washington_test<int>(value);
         int size = graph1.edges.size();
-        CSR<int> graph = graph_coarsening(graph1, [](const CSR<int>& graph) -> Matching {
+        CSR<int> graph = graph_coarsening(graph1,
+            [](const CSR<int>& graph) -> Matching {
             return edmonds<int>(graph);
         });
         int size1 = graph.edges.size();
@@ -53,7 +56,8 @@ class GC_zadeh_test: public testing::TestWithParam<int> {
     void correct_GC_hard_matching() {
         CSR<int> graph1 = zadeh_test<int>(value);
         int size = graph1.edges.size();
-        CSR<int> graph = graph_coarsening(graph1, [](const CSR<int>& graph) -> Matching {
+        CSR<int> graph = graph_coarsening(graph1,
+            [](const CSR<int>& graph) -> Matching {
             return hard_matching<int>(graph);
         });
         int size1 = graph.edges.size();
@@ -63,7 +67,8 @@ class GC_zadeh_test: public testing::TestWithParam<int> {
     void correct_GC_random_matching() {
         CSR<int> graph1 = zadeh_test<int>(value);
         int size = graph1.edges.size();
-        CSR<int> graph = graph_coarsening(graph1, [](const CSR<int>& graph) -> Matching {
+        CSR<int> graph = graph_coarsening(graph1,
+            [](const CSR<int>& graph) -> Matching {
             return random_matching<int>(graph);
         });
         int size1 = graph.edges.size();
@@ -73,7 +78,8 @@ class GC_zadeh_test: public testing::TestWithParam<int> {
     void correct_GC_edmonds() {
         CSR<int> graph1 = zadeh_test<int>(value);
         int size = graph1.edges.size();
-        CSR<int> graph = graph_coarsening(graph1, [](const CSR<int>& graph) -> Matching {
+        CSR<int> graph = graph_coarsening(graph1,
+            [](const CSR<int>& graph) -> Matching {
             return edmonds<int>(graph);
         });
         int size1 = graph.edges.size();
@@ -93,7 +99,8 @@ class GC_cube_test: public testing::TestWithParam<int> {
     void correct_GC_hard_matching() {
         CSR<int> graph1 = cube_test<int>(value);
         int size = graph1.edges.size();
-        CSR<int> graph = graph_coarsening(graph1, [](const CSR<int>& graph) -> Matching {
+        CSR<int> graph = graph_coarsening(graph1,
+            [](const CSR<int>& graph) -> Matching {
             return hard_matching<int>(graph);
         });
         int size1 = graph.edges.size();
@@ -103,7 +110,8 @@ class GC_cube_test: public testing::TestWithParam<int> {
     void correct_GC_random_matching() {
         CSR<int> graph1 = cube_test<int>(value);
         int size = graph1.edges.size();
-        CSR<int> graph = graph_coarsening(graph1, [](const CSR<int>& graph) -> Matching {
+        CSR<int> graph = graph_coarsening(graph1,
+            [](const CSR<int>& graph) -> Matching {
             return random_matching<int>(graph);
         });
         int size1 = graph.edges.size();
@@ -113,7 +121,8 @@ class GC_cube_test: public testing::TestWithParam<int> {
     void correct_GC_edmonds() {
         CSR<int> graph1 = cube_test<int>(value);
         int size = graph1.edges.size();
-        CSR<int> graph = graph_coarsening(graph1, [](const CSR<int>& graph) -> Matching {
+        CSR<int> graph = graph_coarsening(graph1,
+            [](const CSR<int>& graph) -> Matching {
             return edmonds<int>(graph);
         });
         int size1 = graph.edges.size();

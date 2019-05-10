@@ -12,7 +12,8 @@ TEST(test, test1) {
         }
         std::cout << std::endl;
     }
-    CSR<int> graph = graph_coarsening(graph1, [](const CSR<int>& graph) -> Matching {
+    CSR<int> graph = graph_coarsening(graph1,
+        [](const CSR<int>& graph) -> Matching {
         return hard_matching<int>(graph);
     });
     for (int i = 0; i < graph.n; i++) {
@@ -24,4 +25,8 @@ TEST(test, test1) {
         }
         std::cout << std::endl;
     }
+    for (int i = 0; i < graph.n; i++) {
+        std::cout << graph.weight_vertex[i] << " ";
+    }
+    std::cout << std::endl;
 }

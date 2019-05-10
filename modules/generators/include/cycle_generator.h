@@ -17,6 +17,7 @@ AL<WeightType> cycle_generator(int n, bool weighted = false) {
         graph.n = n;
         graph.edges.resize(graph.n);
         graph.weights.resize(graph.n);
+        graph.weight_vertex.resize(graph.n);
         for (int i = 0; i < n - 1; ++i) {
             graph.edges[i].push_back(i + 1);
             graph.weights[i].push_back(weight(generator));
