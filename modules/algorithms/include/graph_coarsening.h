@@ -371,7 +371,7 @@ CSR<WeightType> graph_coarsening(const CSR<WeightType>& graph,
     new_graph_1.weights.resize(graph.n);
     new_graph_1.weight_vertex.resize(graph.n, 1);
     for (int i = 0; i < new_graphs.n; i++) {
-        for (int j = 0; j < new_graphs.edges[i].size(); j++) {
+        for (unsigned j = 0; j < new_graphs.edges[i].size(); j++) {
             int to = new_graphs.edges[i][j];
             WeightType w = new_graphs.weights[i][j];
             int a = finds_set(i);
@@ -412,7 +412,7 @@ CSR<WeightType> graph_coarsening(const CSR<WeightType>& graph,
     std::set <int> a1;
     int new_size1 = 0;
     for (int i = 0; i < new_graph_1.n; i++) {
-        for (int j = 0; j < new_graph_1.edges[i].size(); j++) {
+        for (unsigned j = 0; j < new_graph_1.edges[i].size(); j++) {
             int to = new_graph_1.edges[i][j];
             WeightType weight = new_graph_1.weights[i][j];
             int a = finds_set(i);
@@ -444,7 +444,7 @@ CSR<WeightType> graph_coarsening(const CSR<WeightType>& graph,
     nr.weights.resize(new_size1);
     nr.weight_vertex.resize(new_size1, 1);
     for (int i = 0; i < new_graph.n; i++) {
-        for (int j = 0; j < new_graph.edges[i].size(); j++) {
+        for (unsigned j = 0; j < new_graph.edges[i].size(); j++) {
             int to = new_graph.edges[i][j];
             WeightType weight = new_graph.weights[i][j];
             nr.edges[ng[i]].push_back(ng[to]);
