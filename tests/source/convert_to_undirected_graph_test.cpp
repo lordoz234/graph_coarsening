@@ -2,12 +2,12 @@
 #include "../../modules/pch/include/precomp.h"
 #include "gtest/gtest.h"
 
-#if 0
 TEST(convert_to_undirected_graph_test, simple_graph_with_random_matching) {
     AL <int> graph1;
     graph1.n = 4;
     graph1.edges.resize(graph1.n);
     graph1.weights.resize(graph1.n);
+    graph1.weight_vertex.resize(graph1.n, 1);
     graph1.edges[0].push_back(1);
     graph1.weights[0].push_back(1);
     graph1.edges[0].push_back(2);
@@ -20,6 +20,7 @@ TEST(convert_to_undirected_graph_test, simple_graph_with_random_matching) {
     graph2.n = 4;
     graph2.edges.resize(graph2.n);
     graph2.weights.resize(graph2.n);
+    graph2.weight_vertex.resize(graph1.n, 1);
     graph2.edges[1].push_back(0);
     graph2.weights[1].push_back(1);
     graph2.edges[2].push_back(0);
@@ -33,9 +34,13 @@ TEST(convert_to_undirected_graph_test, simple_graph_with_random_matching) {
     graph2 = convert_to_undirected_graph<int>(graph2);
 
     graph1 = graph_coarsening(CSR<int>(graph1),
-                            random_matching(graph1, 0, INT_MAX, 37));
+    [](const CSR<int>& graph1) -> Matching {
+    return random_matching<int>(graph1, 0, INT_MAX, 37);
+    });
     graph2 = graph_coarsening(CSR<int>(graph2),
-                            random_matching(graph2, 0, INT_MAX, 37));
+    [](const CSR<int>& graph2) -> Matching {
+    return random_matching<int>(graph2, 0, INT_MAX, 37);
+    });
 
     for (int i = 0; i < graph1.n; ++i) {
         ASSERT_EQ(graph1.edges[i].size(), graph2.edges[i].size());
@@ -62,9 +67,13 @@ TEST(convert_to_undirected_graph_test,
     graph2 = convert_to_undirected_graph<int>(graph2);
 
     graph1 = graph_coarsening(CSR<int>(graph1),
-                            random_matching(graph1, 0, INT_MAX, 35));
+    [](const CSR<int>& graph1) -> Matching {
+    return random_matching<int>(graph1, 0, INT_MAX, 35);
+    });
     graph2 = graph_coarsening(CSR<int>(graph2),
-                            random_matching(graph2, 0, INT_MAX, 35));
+    [](const CSR<int>& graph2) -> Matching {
+    return random_matching<int>(graph2, 0, INT_MAX, 35);
+    });
 
     for (int i = 0; i < graph1.n; ++i) {
         ASSERT_EQ(graph1.edges[i].size(), graph2.edges[i].size());
@@ -91,14 +100,22 @@ TEST(convert_to_undirected_graph_test,
     graph2 = convert_to_undirected_graph<int>(graph2);
 
     graph1 = graph_coarsening(CSR<int>(graph1),
-                            random_matching(graph1, 0, INT_MAX, 410));
+    [](const CSR<int>& graph1) -> Matching {
+    return random_matching<int>(graph1, 0, INT_MAX, 410);
+    });
     graph2 = graph_coarsening(CSR<int>(graph2),
-                            random_matching(graph2, 0, INT_MAX, 410));
+    [](const CSR<int>& graph2) -> Matching {
+    return random_matching<int>(graph2, 0, INT_MAX, 410);
+    });
 
     graph1 = graph_coarsening(CSR<int>(graph1),
-                            random_matching(graph1, 0, INT_MAX, 2359));
+    [](const CSR<int>& graph1) -> Matching {
+    return random_matching<int>(graph1, 0, INT_MAX, 2359);
+    });
     graph2 = graph_coarsening(CSR<int>(graph2),
-                            random_matching(graph2, 0, INT_MAX, 2359));
+    [](const CSR<int>& graph2) -> Matching {
+    return random_matching<int>(graph2, 0, INT_MAX, 2359);
+    });
 
     for (int i = 0; i < graph1.n; ++i) {
         ASSERT_EQ(graph1.edges[i].size(), graph2.edges[i].size());
@@ -191,5 +208,3 @@ TEST(convert_to_undirected_graph_test, doesnt_modify_graph_without_edges) {
         ASSERT_EQ(0u, graph.weights[i].size());
     }
 }
-
-#endif
